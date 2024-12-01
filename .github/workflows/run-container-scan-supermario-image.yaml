@@ -24,9 +24,12 @@ jobs:
           docker pull docker.io/rajesharigela45/gitopsproject:${{ env.VERSION }}
           docker save -o gitopsprojectdockerimage.tar docker.io/rajesharigela45/gitopsproject:${{ env.VERSION }}
 
+      - name: Verify TAR File
+        run: ls -l ./gitopsprojectdockerimage.tar    
+
       - name: Run Trivy vulnerability scanner in tarball mode
         uses: aquasecurity/trivy-action@master
         with:
-          input: /github/workspace/gitopsprojectdockerimage.tar
+          input: ./gitopsprojectdockerimage.tar
           exit-code: "0"
           severity: "CRITICAL,HIGH"
